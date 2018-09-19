@@ -1,4 +1,9 @@
 FROM ubuntu:latest AS base
+ARG BUILD_DATE
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/jasiek/docker-latex" \
+      org.label-schema.build-date=$BUILD_DATE
 RUN apt-get update
 RUN apt-get -y upgrade
 
