@@ -1,5 +1,8 @@
-FROM ubuntu:latest AS installer
+FROM ubuntu:latest AS base
 RUN apt-get update
+RUN apt-get -y upgrade
+
+FROM base AS installer
 RUN apt-get install -y wget xzdec perl
 RUN mkdir /source
 WORKDIR /source
@@ -14,8 +17,7 @@ RUN tlmgr update --self --all
 RUN luaotfload-tool -fu
 RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended
 
-FROM ubuntu:latest
-RUN apt-get update
+FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
 ENV PATH="/usr/local/texlive/2018/bin/x86_64-linux:${PATH}"
 ENTRYPOINT ["pdflatex"]
