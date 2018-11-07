@@ -25,5 +25,6 @@ RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms 
 FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
 ENV PATH="/usr/local/texlive/2018/bin/x86_64-linux:${PATH}"
+WORKDIR /source
 ENTRYPOINT ["pdflatex"]
 
