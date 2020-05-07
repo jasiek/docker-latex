@@ -11,7 +11,7 @@ RUN tar -zxf install-tl-unx.tar.gz
 RUN rm *.gz
 ADD texlive.profile /source
 RUN cd install-tl-* && ./install-tl -profile ../texlive.profile
-ENV PATH="/usr/local/texlive/2019/bin/x86_64-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
 RUN tlmgr init-usertree
 RUN tlmgr update --self --all
 RUN luaotfload-tool -fu
@@ -19,7 +19,7 @@ RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms 
 
 FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
-ENV PATH="/usr/local/texlive/2019/bin/x86_64-linux:${PATH}"
+ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:${PATH}"
 WORKDIR /source
 ENTRYPOINT ["pdflatex"]
 
