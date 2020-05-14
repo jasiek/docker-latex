@@ -15,13 +15,13 @@ ENV PATH="/usr/local/texlive/2020/bin/x86_64-linuxmusl/:${PATH}"
 RUN tlmgr init-usertree
 RUN tlmgr update --self --all
 RUN luaotfload-tool -fu
-RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro
+RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro latexmk
 
 FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
 ENV PATH="/usr/local/texlive/2020/bin/x86_64-linuxmusl/:${PATH}"
 WORKDIR /source
-ENTRYPOINT ["pdflatex"]
+ENTRYPOINT ["latexmk", "-pdf"]
 
 ARG BUILD_DATE
 ARG VCS_REF
