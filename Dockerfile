@@ -1,6 +1,7 @@
 FROM alpine:latest AS base
 RUN apk update
-RUN apk upgrade
+RUN apk upgrade --no-cache
+RUN apk add perl
 
 FROM base AS installer
 RUN apk add wget xz perl
