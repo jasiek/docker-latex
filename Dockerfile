@@ -4,7 +4,7 @@ RUN apt update
 RUN apt upgrade -y
 RUN apt install -y perl
 
-ENV YEAR=2021
+ENV YEAR=2022
 
 FROM base AS installer
 RUN apt install -y wget xz-utils
