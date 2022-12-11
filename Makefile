@@ -1,10 +1,30 @@
+vcs_ref := $(shell git rev-parse --short HEAD)
+build_date := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 default:	docker_build
 
 docker_build:
 	@docker buildx build \
 	--push \
 	--platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
-	--tag jasiek/latex:buildx-latest \
-        --build-arg VCS_REF=`git rev-parse --short HEAD` \
-        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
+	--tag jasiek/latex:latest \
+        --build-arg VCS_REF=$(vcs_ref) \
+        --build-arg BUILD_DATE=$(build_date) .
+
+docker_build_arm64:
+	@docker build -t jasiek/latex:latest \
+	--platform linux/arm64/v8 \
+        --build-arg VCS_REF=$(vcs_ref) \
+        --build-arg BUILD_DATE=$(build_date) .
+
+docker_build_armv7:
+	@docker build -t jasiek/latex:latest \
+	--platform linux/arm/v7 \
+        --build-arg VCS_REF=$(vcs_ref) \
+        --build-arg BUILD_DATE=$(build_date) .
+
+docker_build_amd64:
+	@docker build -t jasiek/latex:latest \
+	--platform linux/amd64 \
+        --build-arg VCS_REF=$(vcs_ref) \
+        --build-arg BUILD_DATE=$(build_date) .
 
