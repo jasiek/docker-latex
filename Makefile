@@ -9,7 +9,7 @@ docker_build:
 	--platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
 	--tag jasiek/latex:latest \
         --build-arg VCS_REF=$(vcs_ref) \
-	--build-arg YEAR=$(year)
+	--build-arg YEAR=$(year) \
 	--build-arg BUILD_DATE=$(build_date) .
 
 
@@ -17,20 +17,20 @@ docker_build_arm64:
 	@docker build -t jasiek/latex:latest \
 	--platform linux/arm64/v8 \
         --build-arg VCS_REF=$(vcs_ref) \
-	--build-arg YEAR=$(year)
+	--build-arg YEAR=$(year) \
         --build-arg BUILD_DATE=$(build_date) .
 
 docker_build_armv7:
 	@docker build -t jasiek/latex:latest \
 	--platform linux/arm/v7 \
         --build-arg VCS_REF=$(vcs_ref) \
-	--build-arg YEAR=$(year)
+	--build-arg YEAR=$(year) \
         --build-arg BUILD_DATE=$(build_date) .
 
 docker_build_amd64:
 	@docker build -t jasiek/latex:latest \
 	--platform linux/amd64 \
         --build-arg VCS_REF=$(vcs_ref) \
-	--build-arg YEAR=$(year)
+	--build-arg YEAR=$(year) \
         --build-arg BUILD_DATE=$(build_date) .
 
