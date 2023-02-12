@@ -1,4 +1,4 @@
-year := $(shell date +%Y)
+year := $(shell curl https://ctan.gust.org.pl/tex-archive/systems/texlive/tlnet/ | grep TEXLIVE_ | cut -d _ -f 2 | cut -d \" -f 1)
 vcs_ref := $(shell git rev-parse --short HEAD)
 build_date := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 default:	docker_build
