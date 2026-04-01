@@ -1,13 +1,15 @@
 FROM ubuntu:latest AS base
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y perl
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends perl \
+ && rm -rf /var/lib/apt/lists/*
 
 ARG YEAR
 
 FROM base AS installer
-RUN apt install -y wget xz-utils
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ca-certificates wget xz-utils \
+ && rm -rf /var/lib/apt/lists/*
 RUN mkdir /source
 WORKDIR /source
 RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
@@ -19,15 +21,11 @@ ENV PATH="/usr/local/texlive/${YEAR}/bin/x86_64-linux/:/usr/local/texlive/${YEAR
 RUN tlmgr init-usertree
 RUN tlmgr update --self --all
 RUN luaotfload-tool -fu
-RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf ms babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro latexmk multirow arydshln
+RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro latexmk multirow arydshln
 
 FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
 ENV PATH="/usr/local/texlive/${YEAR}/bin/x86_64-linux/:/usr/local/texlive/${YEAR}/bin/aarch64-linux/:/usr/local/texlive/${YEAR}/bin/armhf-linux/:${PATH}"
-RUN apt download latex2rtf
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt install -y imagemagick
-RUN dpkg -i --ignore-depends=texlive-base latex2rtf*
 WORKDIR /source
 ENTRYPOINT ["latexmk", "-pdf"]
 
