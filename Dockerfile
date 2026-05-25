@@ -14,7 +14,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 RUN mkdir /source
 WORKDIR /source
-RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+RUN wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 RUN tar -zxf install-tl-unx.tar.gz
 RUN rm *.gz
 ADD texlive.profile /source
@@ -31,7 +31,7 @@ RUN tlmgr install \
       collection-latexrecommended \
       collection-fontsrecommended \
       latexmk \
-      moderncv tweaklist marvosym censor \
+      moderncv marvosym censor \
       beamer powerdot \
       multirow arydshln tokcycle pbox ifnextok letltxmacro \
       babel-polish hyphen-polish hyphen-english \
