@@ -21,7 +21,7 @@ ENV PATH="/usr/local/texlive/${YEAR}/bin/x86_64-linux/:/usr/local/texlive/${YEAR
 RUN tlmgr init-usertree
 RUN tlmgr update --self --all
 RUN luaotfload-tool -fu
-RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro latexmk multirow arydshln
+RUN tlmgr install moderncv etoolbox xcolor l3packages l3kernel microtype pgf babel-polish censor pbox ifnextok palatino helvetic mathpazo collection-fontsrecommended beamer powerdot letltxmacro latexmk multirow arydshln tokcycle
 
 FROM base
 COPY --from=installer /usr/local/texlive /usr/local/texlive
